@@ -1,0 +1,13 @@
+S3-staticwebsite/
+│
+├── /website-files/
+│   ├── index.html
+│   └── error.html
+│
+├── /images/
+│   └── screenshots/
+│
+├── /docs/
+│   └── architecture-diagram.png
+│
+├── README.md
