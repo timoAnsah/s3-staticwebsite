@@ -1,7 +1,7 @@
 S3-staticwebsite/
 │
 ├── /website-files/
-│   ├── index.html
+│   ├── scubadiving.html
 │   └── error.html
 │
 ├── /images/
