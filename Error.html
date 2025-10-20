@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Error — Something went wrong</title>
+  <meta name="description" content="Friendly error page with helpful actions and retry option." />
+  <style>
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --muted:#98a2b3;
+      --accent:#7c3aed; /* purple accent */
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      color-scheme: dark;
+      color: #e6eef8;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    html,body{height:100%;margin:0}
+    body{
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent 8%),
+                  radial-gradient(900px 500px at 90% 90%, rgba(14,165,233,0.06), transparent 10%),
+                  var(--bg);
+      display:flex;align-items:center;justify-content:center;padding:32px;
+    }
+    .card{
+      width:100%;max-width:920px;background:linear-gradient(180deg,var(--card),rgba(9,12,18,0.6));border-radius:16px;padding:28px;box-shadow:0 10px 30px rgba(2,6,23,0.6);
+      display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:center;
+    }
+    .left{padding:8px}
+    h1{margin:0;font-size:clamp(28px,4vw,40px);letter-spacing:-0.02em}
+    p.lead{margin:10px 0 18px;color:var(--muted);line-height:1.5}
+    .codechip{display:inline-block;background:var(--glass);padding:6px 10px;border-radius:8px;font-weight:600;color:var(--accent);border:1px solid rgba(124,58,237,0.12)}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{appearance:none;border:0;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#4f46e5);box-shadow:0 6px 18px rgba(124,58,237,0.16);color:white}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .right{background:linear-gradient(180deg,var(--glass),var(--glass-2));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .meta{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .meta div{font-size:13px;color:var(--muted)}
+    .emoji{font-size:48px;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6))}
+    .details{font-family:monospace;background:rgba(0,0,0,0.12);padding:12px;border-radius:8px;overflow:auto;font-size:13px;color:#cde3ff}
+
+    footer{margin-top:18px;font-size:13px;color:var(--muted)}
+
+    /* responsive */
+    @media (max-width:880px){
+      .card{grid-template-columns:1fr;}
+      .right{order:-1}
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="title" aria-describedby="desc">
+    <section class="left">
+      <div class="emoji" aria-hidden="true">🚧</div>
+      <h1 id="title">Something went wrong</h1>
+      <p id="desc" class="lead">We hit a snag while loading the page. This usually fixes itself — try refreshing or come back in a minute. If the problem persists, you can report it to the team.</p>
+
+      <div style="margin:14px 0">
+        <span class="codechip" id="errorCode">Error: —</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="retryBtn">Retry</button>
+        <button class="btn btn-ghost" id="goBackBtn">Go back</button>
+        <a class="btn btn-ghost" href="/" id="homeLink">Home</a>
+        <button class="btn btn-ghost" id="reportBtn">Report issue</button>
+      </div>
+
+      <footer>
+        Tip: Press <kbd>Ctrl</kbd> + <kbd>R</kbd> (or <kbd>Cmd</kbd> + <kbd>R</kbd> on Mac) to reload.
+      </footer>
+    </section>
+
+    <aside class="right" aria-label="Error details">
+      <div class="meta">
+        <div>
+          <div style="font-weight:700">Status</div>
+          <div id="statusText">—</div>
+        </div>
+        <div>
+          <div style="font-weight:700">When</div>
+          <div id="timeText">—</div>
+        </div>
+      </div>
+
+      <div class="details" id="debugArea" role="status">No additional details available.</div>
+    </aside>
+  </main>
+
+  <script>
+    // Example script to populate the error page. Replace with real data as needed.
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const code = params.get('code') || params.get('status') || '500';
+      const msg = params.get('message') || params.get('msg') || '';
+      const time = new Date().toLocaleString();
+
+      const errorCodeEl = document.getElementById('errorCode');
+      const statusTextEl = document.getElementById('statusText');
+      const debugAreaEl = document.getElementById('debugArea');
+      const timeTextEl = document.getElementById('timeText');
+
+      errorCodeEl.textContent = 'Error ' + code;
+      statusTextEl.textContent = (msg ? msg + ' ('+code+')' : 'An unexpected issue ('+code+')');
+      debugAreaEl.textContent = msg ? msg + '\n\n' + JSON.stringify({url:location.href, userAgent:navigator.userAgent}, null, 2) : JSON.stringify({url:location.href, userAgent:navigator.userAgent}, null, 2);
+      timeTextEl.textContent = time;
+
+      // Buttons
+      document.getElementById('retryBtn').addEventListener('click', function(){
+        // simple retry behaviour: reload without query param to avoid loops
+        const u = new URL(location.href);
+        u.search = '';
+        location.href = u.toString();
+      });
+      document.getElementById('goBackBtn').addEventListener('click', function(){
+        if(history.length>1) history.back(); else location.href = '/';
+      });
+      document.getElementById('reportBtn').addEventListener('click', function(){
+        const subj = encodeURIComponent('Error report: '+code);
+        const body = encodeURIComponent('I hit an error on '+location.href+'\n\nStatus: '+code+'\nTime: '+time+'\n\nDetails:\n'+debugAreaEl.textContent);
+        window.location.href = 'mailto:support@example.com?subject='+subj+'&body='+body;
+      });
+
+      // Accessibility: set focus to primary action
+      document.getElementById('retryBtn').focus();
+    })();
+  </script>
+</body>
+</html>
