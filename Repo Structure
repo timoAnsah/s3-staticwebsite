@@ -3,10 +3,12 @@ S3-staticwebsite/
 ├── /website-files/
 │   ├── scubadiving.html
 │   └── error.html
-│
-├── /images/
+|   └── img_5736.jpg
+|   └── img_5741.jpg
+|   └── img_5753.jpg
+├── /Endpoint/
 │   └── screenshots/
-│
+│   └── Repo Structure/
 ├── /docs/
 │   └── architecture-diagram.png
 │
