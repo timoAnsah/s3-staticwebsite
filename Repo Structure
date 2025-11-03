@@ -10,6 +10,6 @@ S3-staticwebsite/
 │   └── screenshots/
 │   └── Repo Structure/
 ├── /docs/
-│   └── architecture-diagram.png
+│   └── architecture.png
 │
 ├── README.md
