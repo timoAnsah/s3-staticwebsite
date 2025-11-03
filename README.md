@@ -32,6 +32,12 @@ Amazon S3 – Stores website files and hosts them publicly.
 AWS IAM – Controls access permissions to the S3 bucket.
 CloudFront – Adds global caching, HTTPS, and faster delivery of website content to users.
 
+### Architecture ###
+
+/assets/architecture.png
+
+
+
 ### Key Takeaways ###
 
 - Amazon CloudFront is a content delivery network (CDN) service. 
