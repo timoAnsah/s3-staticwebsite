@@ -34,9 +34,7 @@ CloudFront – Adds global caching, HTTPS, and faster delivery of website conten
 
 ### Architecture ###
 
-/assets/architecture.png
-
-
+![Architecture Diagram](architecture.png)
 
 ### Key Takeaways ###
 
