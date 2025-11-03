@@ -1,5 +1,11 @@
 ### Hosting a Static Website on Amazon S3
 
+### WorkFlow
+1. Developer updates website files locally  
+2. Files are uploaded to S3 via console 
+3. S3 serves content to users through the public endpoint  
+4. CloudFront caches content for global and secure delivery
+
 S3 is a scalable & durable solution to storing and retrieving any amount of data, at any time, from anywhere without managing servers .
 
 ### Overview
@@ -10,8 +16,12 @@ S3 serves as both the storage and web hosting platform for delivering cost-effec
 
 
 ### Purpose and Motivation
-The goal of this project is to understand S3’s static website hosting capability for front-end websites.
-This use case is ideal for portfolios, blogs...
+The purpose of this project is to:
+- Understand S3 static website hosting 
+- Demonstrate serverless web hosting on AWS  
+- Showcase security, scalability, and cost optimization best practices 
+
+Hosting a website on S3 eliminates the need for infrastructure management while ensuring **global availability**, **high durability**, and easy **integration with CloudFront and Route 53**.
 
 ### AWS Services Used
 Amazon S3 – Stores website files and hosts them publicly.
@@ -38,11 +48,32 @@ Static Web Files: Represents the static content of the website, such as HTML, CS
 These files can be pushed or uploaded to the private S3 bucket, from where they are served to the end-users through the CloudFront distribution.
 In summary, this architecture provides a highly available and scalable way to serve a static website with low latency
 
-### Future Improvements
-Utilise Route 53 for Domain Name System management
-When the client requests the website, the first thing that happens is a DNS query. 
-This query is resolved by Route 53 to point towards the appropriate CloudFront distribution.
 
-AWS Certificate Manager  responsible for provisioning, managing, and deploying public and private SSL/TLS certificates.
+### Well Architectured Framework Alignment ###
+ Pillar | Implementation | Best Practices |
+|--------|----------------|----------------|
+| **Operational Excellence** | Serverless deployment with automated uploads | Use CI/CD for updates; monitor using CloudWatch or S3 events |
+| **Security** | IAM roles, bucket policies, HTTPS | Apply least privilege; enforce encryption (SSE-S3/KMS); Block Public Access unless necessary |
+| **Reliability** | Multi-AZ data replication | Enable versioning; optional cross-region replication |
+| **Performance Efficiency** | S3 scales automatically; CloudFront caching | Optimize object sizes; enable Transfer Acceleration for global users |
+| **Cost Optimization** | Pay-per-use storage and requests | Use lifecycle policies to move old files to Glacier |
+| **Sustainability** | AWS-managed energy-efficient infrastructure | Shared data centers reduce environmental impact |
+
+### Potential Enhancements
+
+- Utilise Route 53 for Domain Name System management
+ When the client requests the website, the first thing that happens is a DNS query. 
+ This query is resolved by Route 53 to point towards the appropriate CloudFront distribution.
+
+- AWS Certificate Manager  responsible for provisioning, managing, and deploying public and private SSL/TLS certificates.
 The certificate ensures that the website connection remains encrypted and is indicated by “HTTPS” in the URL.
 The CloudFront Distribution fetches the SSL certificate from the Certificate Manager to ensure an HTTPS-only communication with the client.
+
+- Implement S3 object lifecycle rules for cost optimization  
+- Enable Access Logging for auditing
+- Automate deployment with GitHub Actions → S3 sync
+
+
+In conconlusion
+This project demonstrates serverless, secure, scalable, and cost-efficient web hosting using Amazon S3.  
+It highlights AWS best practices via the Well-Architected Framework and provides a knowledge framework connecting storage, security, and global performance concepts.
