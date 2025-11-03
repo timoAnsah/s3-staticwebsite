@@ -42,7 +42,7 @@ the convenience of caching static content at edge location.
 the ability to define web access control lists (web ACLs) for the CloudFront distribution, which helps you secure requests to the content with minimal configuration
 
 - CloudFront Function is designed for HTTP redirects. Let’s suppose someone types https://www.i-love-diving.com into their browser. 
-- Instead of staying on the ‘www’ version, this function quickly redirected them to the root domain https://i-love-diving.com (HTTP status 301). This provides a consistent domain experience. 
+Instead of staying on the ‘www’ version, this function quickly redirected them to the root domain https://i-love-diving.com (HTTP status 301). This provides a consistent domain experience. 
 
 - Private S3 Bucket: storage where the website’s static assets (HTML, CSS, JS, images) are stored.
 It’s designated as “private”, meaning direct public access is restricted. Only CloudFront, with its OAC, can fetch content from this bucket.
